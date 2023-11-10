@@ -1,0 +1,17 @@
+{
+  "name": "dog-api",
+  "version": "1.0.0",
+  "description": "dog-api-fetch",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "harsh",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "superagent": "^8.1.2"
+  }
+}
