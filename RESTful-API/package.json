@@ -1,0 +1,16 @@
+{
+  "name": "restful-api",
+  "version": "1.0.0",
+  "description": "Basic restful API practices and routes..",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "K. Harsh Naidu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.1.3"
+  }
+}

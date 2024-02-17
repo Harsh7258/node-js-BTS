@@ -1,0 +1,18 @@
+RESTful API
+
+Mock data: https://www.mockaroo.com/
+
+GET /users - get list of user name
+
+GET /api/users/1 - get the user with ID 1
+GET /api/users/2 - get the user with ID 2
+
+Dynamic path parameters - req.params.id
+GET /api/users/:id 
+:id --> variable | Dynamic
+
+POST /api/users - create new user
+
+PATCH /api/users/:id - edit the user with ID
+
+DELETE /api/users/:id - delete the user with ID
