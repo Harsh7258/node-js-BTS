@@ -4,7 +4,7 @@ const urlController = require("../controllers/urlController");
 const router = express.Router();
 
 router.post("/", urlController.handleGenerateNewShortURL);
-router.get("/:url", urlController.getURLByid);
-router.get('/analytics/:id', urlController.handleGetAnalytics);
+router.get("/:shortId", urlController.getUrlRedirect);
+router.get('/analytics/:shortId', urlController.handleGetAnalytics);
 
 module.exports = router;

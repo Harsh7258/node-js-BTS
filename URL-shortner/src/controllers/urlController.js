@@ -3,69 +3,64 @@ const rg = require('rangen');
 const URL = require("../models/url.models");
 
 async function handleGenerateNewShortURL(req, res) {
-  const body = req.body;
-//   console.log(body.shortId)
+    const body = req.body;
+    // console.log(body.url)
+    if (!body.url) return res.status(400).json({ error: "url is required" });
+    const shortID = rg.id({ length: 8 });
 
-  if (!body.url) return res.status(400).json({ error: "url is required" });
-  const shortID = rg.id({ length: 8 });
-  // console.log(shortID);
+    await URL.create({
+      shortId: shortID,
+      redirectURL: body.url,
+      visitHistory: [],
+    });
 
-  await URL.create({
-    url: shortID,
-    redirectURL: body.url,
-    visitHistory: [],
-  });
-
-  return res.status(200).json({ 
+    console.log(`${req.method}: ${req.path}`);
+    return res.status(201).json({ 
       status: "success",
-      id: shortID,
-      message: `ID generated for ${body.url}`
+      id: shortID 
     });
 };
 
-async function getURLByid (req, res) {
+async function getUrlRedirect (req, res) {
 
-  try {
-    const redirect = req.params.url;
-    // console.log(redirect)
-  
-    const entry = await URL.findOneAndUpdate({ redirect }, {
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
       $push: {
         visitHistory: {
-          timestamp: Date.now()
-        }
-      }
-    });
-
-    if (!entry) {
-      console.log("No document found to update.");
-    } else {
-      console.log("Document updated successfully:", entry);
+          timestamp: `${new Date().toLocaleString()}`,
+        },
+      },
     }
+  );
+  // console.log(entry.redirectURL);
 
-    return res.status(301).json({
-      status: "pending...",
-      data: entry,
-      message: `Error: ${entry} value on findOneAndUpdate()`
-    });
-  } catch (error) {
-    console.log(error)
+  if (!entry) {
+    console.log("No document found to update.");
+  } else {
+    console.log(`Document updated successfully: ${req.method}`);
   };
+
+  res.status(301).redirect(entry.redirectURL);
 };
 
 async function handleGetAnalytics(req, res) {
-  const shortId = req.params.id;
-  const result = await URL.findById({ _id: shortId });
-  return res.json({
+  const shortId = req.params.shortId;
+  const result = await URL.findOne({ shortId });
+
+  console.log(`${req.method}: ${req.path}`);
+  return res.status(200).json({
     status: "success",
-    data: result
-    // totalClicks: result.visitHistory.length,
-    // analytics: result.visitHistory,
+    totalClicks: result.visitHistory.length,
+    analytics: result.visitHistory,
   });
 }
 
 module.exports = {
   handleGenerateNewShortURL,
-  getURLByid,
-  handleGetAnalytics
+  handleGetAnalytics,
+  getUrlRedirect
 };
