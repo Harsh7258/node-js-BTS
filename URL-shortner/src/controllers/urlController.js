@@ -13,11 +13,16 @@ async function handleGenerateNewShortURL(req, res) {
       redirectURL: body.url,
       visitHistory: [],
     });
-
+    
     console.log(`${req.method}: ${req.path}`);
-    return res.status(201).json({ 
-      status: "success",
-      id: shortID 
+    // return res.status(201).json({ 
+    //   status: "success",
+    //   id: shortID 
+    // });
+
+    return res.render("home", {
+      title: "success",
+      id: shortID
     });
 };
 
