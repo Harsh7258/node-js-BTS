@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require("path")
+const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const URL = require("./src/models/url.models");
 const {connectToMongoDB} = require("./dbConnection");
+const { loggedInUser, checkAuth } = require("./../URL-shortner/src/middlewares/auth");
 
 const urlRoute = require("./../URL-shortner/src/routes/urlRoutes");
 const staticRoute = require("./../URL-shortner/src/routes/staticRoute");
@@ -29,9 +31,10 @@ mongoose.connect(DB).then(() => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use("/api/v1/urls", urlRoute);
-app.use("/", staticRoute);
+app.use("/api/v1/urls", loggedInUser, urlRoute);
+app.use("/", checkAuth,staticRoute);
 app.use("/user", userRoute);
 
 app.listen(PORT, () => {

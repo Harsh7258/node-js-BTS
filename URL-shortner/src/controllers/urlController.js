@@ -8,10 +8,14 @@ async function handleGenerateNewShortURL(req, res) {
     if (!body.url) return res.status(400).json({ error: "url is required" });
     const shortID = rg.id({ length: 8 });
 
+    const userId = req.user._id;
+    // console.log(userId);
+
     await URL.create({
       shortId: shortID,
       redirectURL: body.url,
       visitHistory: [],
+      createdBy: userId
     });
     
     console.log(`${req.method}: ${req.path}`);

@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const User = require("./../models/user.models");
+const { setUser } = require("./../service/jwtBased");
 
 async function userSignup(req, res) {
     const { name, email, password } = req.body;
@@ -29,8 +30,12 @@ async function userLogin(req, res) {
         error: "Invalid username or password. Please try again!!"
     });
 
-    const sessionId = uuidv4();
-    console.log(sessionId);
+    // const sessionId = uuidv4();
+    // console.log(sessionId);
+
+    const token = setUser(user);
+    // console.log(token);
+    res.cookie("uid", token);
     return res.status(301).redirect("/");
 };
 

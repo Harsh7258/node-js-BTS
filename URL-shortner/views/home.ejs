@@ -4,6 +4,75 @@
     <style>
         body{
             font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 20px;
+        }
+
+        /* Reset basic styles for consistent formatting */
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; /* Ensure consistent sizing */
+        }
+
+        /* Style the form container */
+        form {
+        display: flex; /* Arrange elements horizontally */
+        /* flex-direction: column; Stack elements vertically */
+        width: 100%; /* Set a reasonable width */
+        margin: 0 auto; /* Center the form horizontally */
+        margin-top: 5px;
+        padding: 20px; /* Add some padding for visual appeal */
+        border: 1px solid #ccc; /* Add a subtle border */
+        border-radius: 4px; /* Round corners slightly */
+        }
+
+        /* Style the input field */
+        input[type="text"] {
+        width: 100%; /* Take up full width within the form */
+        padding: 10px; /* Add some padding for easier interaction */
+        border: 1px solid #ccc; /* Add a border */
+        border-radius: 4px; /* Round corners slightly */
+        font-size: 16px; /* Set a readable font size */
+        box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1); /* Subtle inset shadow */
+        }
+
+        /* Style the label */
+        label {
+        margin-bottom: 5px; /* Add space before the input field */
+        display: block; /* Ensure the label spans the full width */
+        }
+
+        /* Style the button */
+        button[type="submit"] {
+        background-color: #007bff; /* Blue background */
+        color: #fff; /* White text */
+        border: none; /* Remove default button border */
+        padding: 10px 20px; /* Add some padding for visual appeal */
+        border-radius: 4px; /* Round corners slightly */
+        cursor: pointer; /* Indicate that it's a clickable element */
+        margin-left: 2px;
+        /* margin-top: 10px; Add space after the input field */
+        font-size: 16px; /* Set a readable font size */
+        }
+
+        /* Optional: Add hover effect to the button */
+        button[type="submit"]:hover {
+        background-color: #0062cc; /* Darker blue on hover */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+         th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            text-align: left;
         }
     </style>
     <meta charset="UTF-8">
@@ -18,7 +87,7 @@
     <div>
         <form method="post" action="/api/v1/urls">
             <label>
-                Enter your original URL
+                Enter your original URL: 
             </label>
             <input type="text" name="url" placeholder="https://example.com" />
             <button type="submit">Generate</button>

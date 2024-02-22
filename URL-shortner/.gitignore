@@ -1,5 +1,6 @@
 dbConnection.js
 server.js
+/src/service/jwtBased.js
 
 ### Node ###
 # Logs
