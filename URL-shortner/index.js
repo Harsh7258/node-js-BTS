@@ -8,6 +8,7 @@ const {connectToMongoDB} = require("./dbConnection");
 
 const urlRoute = require("./../URL-shortner/src/routes/urlRoutes");
 const staticRoute = require("./../URL-shortner/src/routes/staticRoute");
+const userRoute = require("./../URL-shortner/src/routes/userRoutes");
 
 const app = express();
 const PORT = 8001;
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/urls", urlRoute);
 app.use("/", staticRoute);
+app.use("/user", userRoute);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);

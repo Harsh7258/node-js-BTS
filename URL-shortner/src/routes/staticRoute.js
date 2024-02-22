@@ -12,4 +12,16 @@ router.get("/", async (req, res) => {
     });
   });
 
+router.get("/signup", (req, res) => {
+  return res.render("signUp", {
+    title: "SignUp"
+  });
+});
+
+router.get("/login", (req, res) => {
+  return res.render("logIn", {
+    title: "Login"
+  });
+});
+
 module.exports = router;
