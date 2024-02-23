@@ -34,9 +34,8 @@ async function userLogin(req, res) {
     // console.log(sessionId);
 
     const token = setUser(user);
-    // console.log(token);
-    res.cookie("uid", token);
-    return res.status(301).redirect("/");
+    res.cookie("jwt", token);
+    return res.redirect("/");
 };
 
 module.exports = { userSignup, userLogin };
