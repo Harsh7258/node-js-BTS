@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-
+const { createTokenForUser } = require("./../service/authentication");
 
 const userSchema = new mongoose.Schema({
     fullname: {
@@ -63,8 +63,9 @@ userSchema.static("matchPassword", async function(email, password) {
     if (hashedPassword !== userProvidedHash)
       throw new Error("Incorrect Password");
 
-      return user;
-})
+    const token = createTokenForUser(user);
+    return token;
+});
 
 const User = mongoose.model("User", userSchema);
 

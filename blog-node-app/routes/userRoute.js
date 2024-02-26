@@ -14,7 +14,8 @@ router.get("/signup", (req, res) => {
     })
 });
 
+router.get("/logout", userController.clearCookieToLogout);
 router.post("/signup", userController.signup);
-router.post("/signin", userController.signin)
+router.post("/signin", userController.signin);
 
 module.exports = router;

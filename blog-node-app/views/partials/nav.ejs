@@ -9,20 +9,28 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Add Blog</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              username
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">signin</a></li>
-              <li><a class="dropdown-item" href="#">login</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
+          <% if (locals.user) {%>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Add Blog</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Username
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          <% } else {%>
+            <li class="nav-item">
+              <a class="nav-link active"  aria-current="page" href="/user/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/user/signin">Sign In</a>
+            </li>
+          <% } %>
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -31,3 +39,9 @@
       </div>
     </div>
   </nav>
+
+  <% if (locals.error) {%>
+    <div class="alert alert-danger" role="alert">
+      <%= locals.error  %>
+    </div>
+  <% }%>

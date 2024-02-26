@@ -18,10 +18,21 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.matchPassword(email, password);
+    try {
+        const token = await User.matchPassword(email, password);
 
-    console.log("promise", user);
-    return res.redirect("/");
-}
+    // console.log("promise", token);
+    return res.cookie("jwt", token).redirect("/");
+    } catch (error) {
+        return res.render("signin", {
+            title: 'Sign In',
+            error: 'Incorrect Email or Password. Please try again!'
+        });
+    };
+};
 
-module.exports = { signup, signin };
+const clearCookieToLogout = (req, res) => {
+    res.clearCookie('jwt').redirect("/");
+};
+
+module.exports = { signup, signin, clearCookieToLogout };
