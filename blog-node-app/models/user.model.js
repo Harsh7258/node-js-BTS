@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+
 
 const userSchema = new mongoose.Schema({
     fullname: {
@@ -11,8 +13,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     salt: {
-        type: String,
-        required: true
+        type: String
     },
     password: {
         type: String,
@@ -28,6 +29,42 @@ const userSchema = new mongoose.Schema({
         default: '/images/default.png'
     }
 }, { timestamps: true });
+
+//DOCUMENT MIDDLEWARE
+userSchema.pre("save", function(next) {
+    const user = this; // this is the current user
+    // console.log(user);
+
+    if(!user.isModified("password")) return;
+
+    const salt = crypto.randomBytes(16).toString();
+    // console.log(salt);
+    const hashedPassword = crypto.createHmac('sha256', salt).update(user.password).digest('hex');
+    // console.log(hashedPassword);
+
+    this.salt = salt;
+    this.password = hashedPassword;
+
+    next();
+});
+
+//MONGOOSE VIRTUAL FUNCTION
+userSchema.static("matchPassword", async function(email, password) {
+    const user = await this.findOne({ email });
+    // console.log(user);
+
+    if(!user) throw new Error("User not found!");
+
+    const salt = user.salt;
+    const hashedPassword = user.password;
+
+    const userProvidedHash = crypto.createHmac('sha256', salt).update(password).digest('hex');
+
+    if (hashedPassword !== userProvidedHash)
+      throw new Error("Incorrect Password");
+
+      return user;
+})
 
 const User = mongoose.model("User", userSchema);
 
