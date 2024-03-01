@@ -5,20 +5,69 @@
     <title>Blog | <%= title %></title>
 </head>
 <body>
-    <%- include('./partials/nav.ejs') %>
-
-    <div class="container mt-4">
-        <% blogs.forEach(blog => { %>
-            <div class="card" style="width: 18rem;">
-                <img src="<%= blog.coverImage %>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= blog.title %></h5>
-                  <p class="card-text"><%= blog.body %></p>
-                  <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read full blog</a>
-                </div>
-              </div>
-        <% }) %>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">blogBlog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <% if (locals.user) {%>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/blog/add-new">Add Blog</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                username
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          <% } else {%>
+            <li class="nav-item">
+              <a class="nav-link active"  aria-current="page" href="/user/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/user/signin">Sign In</a>
+            </li>
+          <% } %>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
     </div>
+  </nav>
+
+  <% if (locals.error) {%>
+    <div class="alert alert-danger" role="alert">
+      <%= locals.error  %>
+    </div>
+  <% }%>
+
+    <div class="container mt-3">
+        <div class="row row-cols-4">
+          <% blogs.forEach(blog => { %>
+          <div class="col">
+            <div class="card col" style="width: 18rem">
+              <img src="<%= blog.coverImage %>" class="card-img-top" />
+              <div class="card-body">
+                <h5 class="card-title"><%= blog.title %></h5>
+                <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read full blog</a>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
 
     <%- include('./partials/script.ejs') %>
 </body>

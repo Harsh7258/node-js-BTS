@@ -10,6 +10,9 @@ router.get("/add-new", (req, res) => {
     });
 });
 
+router.get('/:id', blogController.getBlogs);
+
 router.post("/", blogController.upload.single('coverImage'), blogController.uploadCoverImage);
+router.post("/comment/:blogId", blogController.postComment);
 
 module.exports = router;

@@ -8,6 +8,7 @@ const authMiddleware = require("./middlewares/authentication");
 const Blog = require("./models/blog.model");
 const userRoute = require("./routes/userRoute");
 const blogRoute = require("./routes/blogRoutes");
+const User = require("./models/user.model");
 
 const app = express();
 const PORT = 8000;
@@ -27,11 +28,14 @@ app.use(authMiddleware.checkForAuthenticationCookie("jwt"));
 app.use(express.static(path.resolve('./public')));
 
 app.get("/", async (req, res) => {
-    const allBlogs = await Blog.find({})
+    const allBlogs = await Blog.find({});
+    // const name = await User.findById( req.user.id ).select("fullname");
+    // console.log(req.user)
     return res.render("home", {
         title: "Home",
         user: req.user,
-        blogs: allBlogs
+        blogs: allBlogs,
+        // userName: name.fullname,
         // name: req.user.email
     });
 });
