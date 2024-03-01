@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: sans-serif;
+            margin: 40px;
+        }
+
+        form {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h2>Encrypted File Sharing</h2>
+    <% if (locals.fileLink != null) { %>
+        <div style="margin-bottom: 1rem;">
+          Your file is upload: 
+          <a href="<%= locals.fileLink %>"><%= locals.fileLink %></a>
+        </div>
+      <% } %>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Upload File:</label>
+        <input type="file" id="file" name="file" required>
+      
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+      
+        <button type="submit">Submit upload</button>
+      </form>
+</body>
+</html>
