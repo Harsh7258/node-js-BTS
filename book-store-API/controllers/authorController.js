@@ -1,4 +1,4 @@
-const Author = require("../models/author");
+const Author = require("../models/author.model");
 
 const getAllAuhtors = async (req, res) => {
     let searchOptions = {};

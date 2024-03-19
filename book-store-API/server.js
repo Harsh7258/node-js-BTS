@@ -10,8 +10,9 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3000; 
 
-const indexRouter = require('./routes/index');
-const authorRouter = require("./routes/authors");
+const indexRouter = require('./routes/indexRoute');
+const authorRouter = require("./routes/authorsRoute");
+const bookRouter = require("./routes/booksRoute");
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + '/views')
@@ -36,6 +37,7 @@ connectDB();
 
 app.use('/', indexRouter);
 app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
 
 app.listen(PORT, () => {
     console.log(`Server started at: ${PORT}`)
