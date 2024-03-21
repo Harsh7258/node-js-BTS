@@ -1,7 +1,8 @@
 <h2 class="page-header">New book</h2> 
 <form method="post" action="/books">
     <%- include('_form-fields') %>
-    
-    <a href="/books" class="btn btn-primary">Cancel</a>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-row form-row-end btn-row">
+      <a href="/books" class="btn btn-danger1">Cancel</a>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
   </form>

@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Poppins&display=swap');
 @import 'shared/variables.css';
-@import 'shared/fonts.css';
 @import 'shared/header.css';
 @import 'shared/buttons.css';
+@import 'shared/form.css';
+@import 'shared/author.css';
+@import 'shared/books.css';
 
 :root {
   font-family: "Averia Sans Libre", sans-serif;
