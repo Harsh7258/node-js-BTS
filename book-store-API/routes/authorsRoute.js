@@ -10,6 +10,8 @@ router.get('/new', authorController.getNewAuthor);
 
 router.get('/:id/edit', authorController.editAuthor);
 
-router.route('/:id').get(authorController.showBooksByAuthor).put(authorController.updateAuthor).delete(authorController.deleteAuthor)
+router.get('/:id', authorController.showBooksByAuthor)
+router.put('/:id', authorController.updateAuthor)
+router.delete('/:id', authorController.deleteAuthor);
 
 module.exports = router;

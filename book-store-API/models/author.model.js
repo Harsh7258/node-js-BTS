@@ -21,6 +21,6 @@ authorSchema.pre('remove', function(next) {
     })
 })
 
-const Author = mongoose.model('Auhtor', authorSchema);
+const Author = mongoose.model('Author', authorSchema);
 
 module.exports = Author;
