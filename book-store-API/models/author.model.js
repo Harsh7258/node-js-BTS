@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Book  = require("./book.model");
 
 const authorSchema = new mongoose.Schema({
     name: {
@@ -6,6 +7,19 @@ const authorSchema = new mongoose.Schema({
         required: true
     }
 });
+
+authorSchema.pre('remove', function(next) {
+    // console.log(this.id)
+   Book.find({ author: this.id }, (err, books) => {
+        if(err) {
+            next(err);
+        } else if(books.length > 0) {
+            next(new Error('This author still have books in Library!'))
+        } else {
+            next()
+        }
+    })
+})
 
 const Author = mongoose.model('Auhtor', authorSchema);
 

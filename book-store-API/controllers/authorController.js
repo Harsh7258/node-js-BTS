@@ -1,4 +1,5 @@
 const Author = require("../models/author.model");
+const Book = require("../models/book.model");
 
 const getAllAuhtors = async (req, res) => {
     let searchOptions = {};
@@ -26,15 +27,80 @@ const createAuthor = async (req, res) => {
     })
     try {
         const newAuthor = await author.save();
-        // res.redirect(`authors/${newAuthor.id}`)
-        res.redirect("authors");
+        res.redirect(`authors/${newAuthor.id}`)
+        // console.log('new author', newAuthor)
     } catch (error) {
         res.render('authors/new', {
             author: author,
             errorMessage: 'Error creating Author.'
         })
     }
-
 }
 
-module.exports = { getAllAuhtors, getNewAuthor, createAuthor }
+const editAuthor = async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id);
+        res.render('authors/edit', { author: author })
+    } catch (error) {
+        res.redirect('/authors')
+    }
+}
+
+const updateAuthor = async (req, res) => {
+    let author;
+    try {
+        author = await Author.findById(req.params.id);
+        author.name = req.body.name;
+        await author.save();
+        res.redirect(`/authors/${author.id}`)
+    } catch (error) {
+        if(author == null) {
+            res.redirect('/')
+        } else {
+            res.render('authors/edit', {
+                author: author,
+                errorMessage: 'Error updating Author.'
+            })
+        }
+    }
+}
+
+const deleteAuthor = async (req, res) => {
+    let author;
+    try {
+        author = await Author.findById(req.params.id);
+        await author.deleteOne();
+        // console.log(author.deleteOne())
+        res.redirect(`/authors`)
+    } catch (error) {
+        if(author == null) {
+            res.redirect('/')
+        } else {
+            res.redirect(`/authors/${author.id}`)
+        }
+    }
+}
+
+const showBooksByAuthor = async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id)
+        const books = await Book.find({ author: author.id }).limit(4).exec()
+
+        res.render('authors/show', {
+            author: author,
+            booksByAuthor: books
+        })
+    } catch (error) {
+        res.redirect('/')
+    }
+}
+
+module.exports = { 
+    getAllAuhtors, 
+    getNewAuthor, 
+    createAuthor, 
+    editAuthor, 
+    updateAuthor, 
+    deleteAuthor,
+    showBooksByAuthor 
+}

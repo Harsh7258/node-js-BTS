@@ -41,14 +41,14 @@ router.get("/", async (req, res) => {
     }
 })
 router.post("/", async (req, res) => {
-    // console.log('book body',req.body)
+    // console.log('book body',req.body.author)
     // console.log('file',req.file)
 
     // const fileName = req.file != null ? req.file.filename : null;
 
     const book = new Book({
         title: req.body.title,
-        author: req.body.auhtor,
+        author: req.body.author,
         publishDate: new Date(req.body.publishDate),
         pageCount: req.body.pageCount,
         description: req.body.description
