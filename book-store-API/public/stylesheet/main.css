@@ -42,10 +42,12 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
 }
+
 .recent-flex a{
   text-decoration: none;
   color: var(--color-text-light);
 }
+
 .recent-flex a:hover{
   text-decoration:underline;
   color: whitesmoke;
