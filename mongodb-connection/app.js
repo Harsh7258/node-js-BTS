@@ -1,7 +1,8 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+require("dotenv").config()
 
-const mongoController = require("./mongo");
+const mongoController = require("./mongoose")
 
 const app = express()
 const PORT = 3000

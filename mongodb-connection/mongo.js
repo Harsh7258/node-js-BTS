@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient
+const Products = require("./models/products");
 
-const url = 'mongodb://localhost:27017/product_test'
+const url = process.env.DATABASE_URL
 
 const createProducts = async (req, res, next) => {
     const newProduct = {
